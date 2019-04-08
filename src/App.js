@@ -9,7 +9,8 @@ class App extends Component {
     super(props, context);
     this.state = {
       loggedIn: false,
-      appTitle: 'cnstllnpdf'
+      appTitle: 'cnstllnpdf',
+      user: 'Dan'
     }
     
   }
@@ -17,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <>
-      <Header name={this.state.appTitle}/>
+      <Header name={this.state.appTitle} user={this.state.user}/>
       <Main name={this.state.appTitle}/>
       <Footer name={this.state.appTitle}/>
       </>
