@@ -1,17 +1,26 @@
 import React, { Component } from "react";
 
+import Header from './components/Header';
+import Main from './components/Main';
+import Footer from './components/Footer';
+
 class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      loggedIn: false
+      loggedIn: false,
+      appTitle: 'cnstllnpdf'
     }
     
   }
   
   render() {
     return (
-      <h1>cnstllnpdf</h1>
+      <>
+      <Header name={this.state.appTitle}/>
+      <Main name={this.state.appTitle}/>
+      <Footer name={this.state.appTitle}/>
+      </>
     );
   }
 }
