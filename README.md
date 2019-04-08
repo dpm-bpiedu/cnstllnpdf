@@ -1,2 +1,2 @@
-#cnstllnpdf
-creaete pdf from Constellation files
+##cnstllnpdf
+create pdf from Constellation files
