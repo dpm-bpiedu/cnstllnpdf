@@ -1,50 +1,40 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 const Header = props => {
-  const { user } = this.props;
   return (
     <header>
       <nav className="navbar navbar-light bg-light">
         <div className="container">
-          <a className="navbar-brand" href="./index.html">
-            {props.name} Hello, {user}
-          </a>
+          <Link className="navbar-brand" to="./index.html">
+            {props.name} Hello, {props.user}
+          </Link>
           <ul className="nav">
-            {user && (
+            {props.user == null && (
               <>
                 <li className="nav-item">
-                  <a className="nav-link" href="./pages/work.html">
-                    instructions
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="./pages/about.html">
-                    create pdf
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="./pages/contact.html">
-                    get pdf
-                  </a>
-                </li>
+                  <Link className="nav-link" to="/login">
+                    log in
+                  </Link>
+                </li> 
               </>
             )}
-            {user == null && (
+            {props.user && (
               <>
                 <li className="nav-item">
-                  <a className="nav-link" href="./pages/work.html">
+                  <Link className="nav-link" to="/instructions">
                     instructions
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="./pages/about.html">
+                  <Link className="nav-link" to="/createpdf">
                     create pdf
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="./pages/contact.html">
-                    get pdf
-                  </a>
+                  <Link className="nav-link" to="/logout">
+                    logout
+                  </Link>
                 </li>
               </>
             )}            
