@@ -1,0 +1,23 @@
+{
+  "name": "cnstllnpdf",
+  "version": "1.0.0",
+  "description": "convert html to pdf",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpm-bpiedu/cnstllnpdf.git"
+  },
+  "keywords": [
+    "work",
+    "project"
+  ],
+  "author": "dan moneypenny",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dpm-bpiedu/cnstllnpdf/issues"
+  },
+  "homepage": "https://github.com/dpm-bpiedu/cnstllnpdf#readme"
+}
