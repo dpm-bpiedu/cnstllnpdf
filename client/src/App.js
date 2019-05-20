@@ -1,38 +1,44 @@
-import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import Nav from "./components/Nav/Nav";
-import LogIn from "./components/LogIn";
-import SecureOne from "./components/SecureOne";
-import SecureTwo from "./components/SecureTwo"
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+
+// Routes
+import Routes from './routes';
+
+// Components
+import Nav from './components/Nav/Nav';
+import Landing from './components/Landing';
+import PrivateRoute from './components/secure/PrivateRoute';
+import ProtectedHome from './components/secure/ProtectedHome';
+import Login from './components/secure/Login';
+import Logout from './components/secure/Logout';
+import PageNotFound from './components/PageNotFound';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: null,
-      message: 'no user',
-      routes: [
-        {name: 'log in', url: '/', exact: true},
-        {name: 'secure one', url: '/secureone', exact: false},
-        {name: 'secure two', url: '/securetwo', exact: true},
-        {name: 'log out', url: '/logout', exact: true}        
-      ]
+      user: true,
+      message: 'no user'
     }
   }
   render() {
     return (
       <div>
         <h1>cnstllnpdf</h1>
-        <Nav routes={this.state.routes} />
+        <Nav routes={Routes} />
         <hr />
         <Switch>
-          <Route exact path='/' component={LogIn}/>
-          <Route path='/secureone' component={SecureOne}/>
-          <Route path='/securetwo' component={SecureTwo}/>
-          <Route path='/logout' render={()=> {
-            return <Redirect to='/' />
-          }}/>
+          <Route path='/' component={Landing} exact/>
+          <PrivateRoute 
+            path='/private' 
+            user={this.state.user} 
+            component={ProtectedHome}
+            />
+          <Route path='/login' component={Login}/>
+          <Route path='/logout' component={Logout}/>
+          <Route component={PageNotFound}/>
         </Switch>
       </div>
     );
