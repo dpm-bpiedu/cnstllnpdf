@@ -24,7 +24,7 @@ class App extends Component {
     evt.preventDefault();
     this.setState({
       user: false,
-      message: 'user is NOT logged in',
+      message: 'logged OUT',
       userID: null,
       userEmail: null
     });
@@ -57,9 +57,16 @@ class App extends Component {
       if(FBUser) {
         this.setState({
           user: true,
-          message: 'user IS logged in',
+          message: 'logged IN',
           userEmail: FBUser.email,
           userID: FBUser.id
+        });
+      } else {
+        this.setState({
+          user: false,
+          message: 'logged OUT',
+          userEmail: null,
+          userID: null
         });
       }
     });
@@ -70,11 +77,12 @@ class App extends Component {
     return (
       <div>
         <h1>cnstllndpf </h1>
-        {!this.state.user && (<button id="btnLogin" type="button" onClick={this.loginUser}>log in</button>)}
+        
         {this.state.user && (<button id="btnLogout" type="button" onClick={this.logoutUser}>log out</button>)}
        
         <h2>{this.state.message}</h2>
         <hr/>
+        {!this.state.user && (<button id="btnLogin" type="button" onClick={this.loginUser}>log in</button>)}        
         <Switch>
           <Route path='/' exact component={Home}/>
           <Route path='/instructions' component={Instructions}/>
