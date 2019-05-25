@@ -72,11 +72,7 @@ class App extends Component {
         <Switch>
           <Route path='/' component={Landing} exact/>
           <PrivateRoute component={ProtectedHome}/>
-          <Route path='/login' component={Login}/>
-          }}/>          
-          {/* <Route path='/login' render={()=> {
-            return <Login user={this.user}/>
-          }}/> */}
+          <Route path='/login' component={Login}/>         
           <Route component={PageNotFound}/>
         </Switch>
       </div>
