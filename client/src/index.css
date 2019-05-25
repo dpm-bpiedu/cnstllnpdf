@@ -37,3 +37,11 @@ nav {
 .activeNavLink {
   font-weight: bold;
 }
+
+.log-status {
+  max-width: 300px;
+  font-size: 14px;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}
