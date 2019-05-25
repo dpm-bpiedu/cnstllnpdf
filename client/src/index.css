@@ -7,41 +7,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
 }
 
-form {
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid gray;
-  padding: 15px;
-  text-align: center;
+#btnLogout, #btnLogin {
+  position: absolute;
+  right: 10%;
+  width: 100px;
+  padding: 8px;
 }
 
-form input {
-  width: 48%;
+#btnLogin {
+  top: 8px;
 }
 
-form button {
-  margin-top: 15px;
+#btnLogout {
+  top: 40px;
 }
 
-nav {
-  max-width: 200px;
-  margin-left: auto;
-  margin-right: auto;
-}
 
-.activeNavLink {
-  font-weight: bold;
-}
 
-.log-status {
-  max-width: 300px;
-  font-size: 14px;
-  text-align: center;
-  margin-right: auto;
-  margin-left: auto;
-}
