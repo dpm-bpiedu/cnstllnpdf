@@ -1,97 +1,160 @@
-import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import firebase, { UN, PWD } from './config';
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
+//import firebase from './config';
 
-// Components
-import Home from './Home';
-import Instructions from './Instructions';
-import GetPDF from './GetPDf';
+const works = [
+  {
+    name: 'All',
+    id: 'work-001',
+    description: 'all of the works',
+    resources: [
+      {
+        name: 'all abstract',
+        id: 'all-abstact'
+      },
+      {
+        name: 'all wildlife',
+        id: 'all-wildlife'
+      }, 
+      {
+        name: 'all portrait',
+        id: 'all-portrait'
+      }          
+    ]
+  },
+  {
+    name: 'Sculpture',
+    id: 'work-002',
+    description: 'sculpture works of art',
+    resources: [
+      {
+        name: 'abstract sculpture',
+        id: 'sculpture-abstact'
+      },
+      {
+        name: 'wildlife sculpture',
+        id: 'sculpture-wildlife'
+      }, 
+      {
+        name: 'portrait sculpture',
+        id: 'sculpture-portrait'
+      }        
+    ]
+  },
+  {
+    name: 'Painting',
+    id: 'work-003',
+    description: 'painting works of art',
+    resources: [
+      {
+        name: 'abstract painting',
+        id: 'painting-abstact'
+      },
+      {
+        name: 'wildlife painting',
+        id: 'painting-wildlife'
+      }, 
+      {
+        name: 'portrait painting',
+        id: 'painting-portrait'
+      }        
+    ]
+  },  
+  {
+    name: 'Drawing',
+    id: 'work-004',
+    description: 'drawing works of art',
+    resources: [
+      {
+        name: 'abstract drawing',
+        id: 'painting-abstact'
+      },
+      {
+        name: 'wildlife drawing',
+        id: 'painting-wildlife'
+      }, 
+      {
+        name: 'portrait drawing',
+        id: 'painting-portrait'
+      }        
+    ]
+  }   
+]
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+// components
+const Home = () => {
+  return (
+    <div><h1>Home</h1></div>
+  )
+}
 
-    this.state = {
-      user: false,
-      message: null,
-      userID: null,
-      userEmail: null,
-      errorMessage: null
-    }
-    this.loginUser = this.loginUser.bind(this);
-  }
+const Work = ({ match }) => {
+  const work = works.find((elem) => {
+    return elem.id === match.params.workId
+  });
 
-  logoutUser = evt => {
-    evt.preventDefault();
-    this.setState({
-      user: false,
-      message: 'logged OUT',
-      userID: null,
-      userEmail: null
-    });
+  return (
+    <div>
+      <h3>{work.name}</h3>
+      <p>{work.description}</p>
 
-    firebase.auth()
-      .signOut()
-      .then(() => {
-        console.log('logged out');
-      });
+      <ul>
+        {work.resources.map((sub) => (
+         <li key={sub.id}>
+           <Link to={`${match.url}/${sub.id}`}>{sub.name}</Link>
+         </li> 
+        ))}
+      </ul>
+      
+    </div>
+  )
+}
 
-  }
+const Works = ({ match }) => {
+  return (
+    <div>
+      <h2>Works</h2>
+      <ul>
+        {
+          works.map(({ name, id }) => (
+            <li key={id}>
+              <Link to={`${match.url}/${id}`}>{name}</Link>
+            </li>
+          ))
+        }
 
-  loginUser = evt => {
-    evt.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(UN, PWD)
-    .then(() => {
-      console.log("logged in");
-    })
-    .catch(error => {
-      if(error.message !== null) {
-        this.setState({errorMessage: error.message});
-      } else {
-        this.setState({errorMessage: null});
-      }
-    })
-  }
+      </ul>
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(FBUser => {
-      if(FBUser) {
-        this.setState({
-          user: true,
-          message: 'logged IN',
-          userEmail: FBUser.email,
-          userID: FBUser.id
-        });
-      } else {
-        this.setState({
-          user: false,
-          message: 'logged OUT',
-          userEmail: null,
-          userID: null
-        });
-      }
-    });
-  }
+      <hr/>
+
+      <Route path={`${match.path}/:workId`} component={Work}/>
+
+
+      </div>
+  )
+}
+
+
+
+
+class App extends React.Component {
+
 
   render() {
 
-    return (
+      return (
       <div>
-        <h1>cnstllndpf </h1>
-        
-        {!this.state.user && (<button id="btnLogout" type="button" onClick={this.logoutUser}>log out</button>)}
-       
-        <h2>{this.state.message}</h2>
+        <ul>
+          <li><Link to='/'>Home</Link></li>
+          <li><Link to='/works'>Works</Link></li>
+        </ul>
         <hr/>
+        <h1>cnstllndpf </h1>
 
-        <Switch>
-          
-          <Route path='/' exact render={()=> {
-            return (<Home login={this.loginUser}/>);
-          }}/>
-          <Route path='/instructions' component={Instructions}/>
-          <Route path='/getpdf' exact component={GetPDF}/>
-        </Switch>
+        <Route exact path='/' component={Home}/>
+        <Route path='/works' component={Works}/>
+    
+
 
       </div>
     );

@@ -11,20 +11,24 @@ h1, h2 {
   text-align: center;
 }
 
-#btnLogout {
-  position: absolute;
-  top: 15px;
-  right: 10%;
-  width: 100px;
+button.btn-log {
+  display: block;
+  width: 75px;
   padding: 8px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-#btnLogin {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100px;
-  padding: 8px;
+#btn-login {
+  background-color: white;
+  border-color: green;
+  color: green;
+}
+
+#btn-logout {
+  background-color: white;
+  border-color: indianred;
+  color: indianred;
 }
 
 
