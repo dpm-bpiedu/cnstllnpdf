@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import firebase, { UN, PWD } from './config';
 
 // Components
@@ -18,6 +18,7 @@ class App extends Component {
       userEmail: null,
       errorMessage: null
     }
+    this.loginUser = this.loginUser.bind(this);
   }
 
   logoutUser = evt => {
@@ -78,16 +79,20 @@ class App extends Component {
       <div>
         <h1>cnstllndpf </h1>
         
-        {this.state.user && (<button id="btnLogout" type="button" onClick={this.logoutUser}>log out</button>)}
+        {!this.state.user && (<button id="btnLogout" type="button" onClick={this.logoutUser}>log out</button>)}
        
         <h2>{this.state.message}</h2>
         <hr/>
-        {!this.state.user && (<button id="btnLogin" type="button" onClick={this.loginUser}>log in</button>)}        
+
         <Switch>
-          <Route path='/' exact component={Home}/>
+          
+          <Route path='/' exact render={()=> {
+            return (<Home login={this.loginUser}/>);
+          }}/>
           <Route path='/instructions' component={Instructions}/>
           <Route path='/getpdf' exact component={GetPDF}/>
         </Switch>
+
       </div>
     );
   }
