@@ -7,10 +7,6 @@ import {
   withRouter
  } from 'react-router-dom';
 
-//  const testLog = () => {
-//    firebase.auth().onAuthStateChanged(function(user))
-//  }
-
 const testAuth = {
   isAuthenticated: false,
   authenticate(cb) {
@@ -106,7 +102,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: true,
+      user: false,
       message: 'test message'
     }
   }
