@@ -37,7 +37,11 @@ class Login extends Component {
         loginInfo.password
       )
       .then(()=> {
-        this.setState({redirectToReferrer: true});
+        this.setState({
+          redirectToReferrer: true,
+          email: '',
+          password: ''
+        });
         //this.props.history.push('/private');
       })
       .catch(error => {
@@ -68,11 +72,30 @@ class Login extends Component {
     }
 
     return (
-      <div>
-        <h2>Log in to view private page: {this.props.extra}</h2>
-        <button onClick={this.login}>log in</button>
-
-      </div>
+        <form id='login-form' onSubmit={this.handleSubmit}>
+          <legend>Log in to site</legend>
+          <label htmlFor='email'>email</label>
+          <input 
+            required
+            type='email' 
+            id='email' 
+            name='email'
+            placeholder='email'
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+          <label htmlFor='password'>password</label>
+          <input 
+            required
+            type='password' 
+            id='password'
+            name='name' 
+            placeholder='password' 
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+          <button type='submit'>log in</button>
+        </form>
     );
   }
 }
