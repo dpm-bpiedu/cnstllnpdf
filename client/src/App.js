@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 // components
 
 import Public from "./Public";
+import PrivateRoute from './PrivateRoute';
 import Private from "./Private";
 import Login from "./Login";
 import PageNotFound from "./PageNotFound";
@@ -42,16 +43,16 @@ class App extends React.Component {
         this.setState({
           user: true,
           userEmail: FBUser.email,
-          userId: FBUser.uid,
-          message: 'user logged in'
+          userID: FBUser.uid,
+          message: 'user logged IN'
         });
         console.log('Auth State Changed: logged IN');
       } else {
         this.setState({
           user: null,
           userEmail: null,
-          userId: null,
-          message: 'user logged out'          
+          userID: null,
+          message: 'user logged OUT'          
         });
         console.log('Auth State Changed: logged OUT');
       }
@@ -64,15 +65,14 @@ class App extends React.Component {
       <>
         <header>
           <h1>cnstllndpf</h1>
+          <h5>{this.state.message}</h5>
           {this.state.user && (
             <Nav user={this.state.user} logout={this.logOutUser} />
           )}
         </header>
         <main>
           <hr />
-        </main>
-
-        <Switch>
+          <Switch>
           <Route
             exact
             path="/"
@@ -80,15 +80,18 @@ class App extends React.Component {
               return <Public user={this.state.user} />;
             }}
           />
-          <Route path="/private" component={Private} />
           <Route
             path="/login"
             render={props => {
-              return <Login {...props} extra="Boo!" />;
+              return <Login {...props} user={this.state.user} extra="Boo!" />;
             }}
           />
+          <PrivateRoute path='/private' component={Private} user={this.state.user}/>
           <Route component={PageNotFound} />
-        </Switch>
+        </Switch>          
+        </main>
+
+
       </>
     );
   }

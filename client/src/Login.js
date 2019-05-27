@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from './config';
-import { Link, Redirect, withRouter } from 'react';
+import { Redirect } from 'react-router-dom';
 
 
 class Login extends Component {
@@ -9,7 +9,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      errorMessage: '',
+      formError: '',
       redirectToReferrer: null
     };
     this.handleChange = this.handleChange.bind(this);
@@ -23,55 +23,52 @@ class Login extends Component {
     this.setState({ [itemName]: itemValue} );
   }
 
-  handleSubmit(evt) {
-    const loginInfo = {
-     email: this.state.email, 
-     password: this.state.password
+  handleSubmit(e) {
+    const logInfo = {
+      email: this.state.email,
+      password: this.state.password
     };
-    evt.preventDefault();
+    e.preventDefault();
 
     firebase
       .auth()
       .signInWithEmailAndPassword(
-        loginInfo.email,
-        loginInfo.password
+        logInfo.email,
+        logInfo.password
       )
-      .then(()=> {
-        this.setState({
-          redirectToReferrer: true,
-          email: '',
-          password: ''
-        });
-        //this.props.history.push('/private');
+      .then(() => {
+        console.log('handlSubmit');
+        this.props.history.push('/private');
+        //this.setState({redirectToReferrer: true});
       })
       .catch(error => {
-        if(error) {
-          this.setState({errorMessage: error.message});
-        } else {
-          this.setState({errorMessage: null});
-        }
+        this.setState({formError: error.message});
       });
   }
 
   render() {
 
-    const {match} = this.props;
-    const  { redirectToReferrer } = this.state;
-    const { from } = this.props.location.state || { from: {pathname: '/'} }
+    // const { redirectToReferrer } = this.state;
+    // const { from } = this.props.location.state || { from: {pathname: '/'} }
 
 
-    console.log(match);
-    console.log(this.props.history);
-    console.log(this.props.location);
-
-    if(redirectToReferrer === true) {
-        //this.props.history.push('/private')
-        return (
-          <Redirect to={from}/>
-        )
-    }
-
+    // if(redirectToReferrer === true) {
+    //   // this.props.history.push('/private')
+    //   // return (
+    //   //   <Redirect to='/private'/>
+    //   // )
+    // }
+  
     return (
+      <>
+        {this.props.user && (
+          <p>you are logged in</p>
+        )}
+
+    
+            
+               
+      
         <form id='login-form' onSubmit={this.handleSubmit}>
           <legend>Log in to site</legend>
           <label htmlFor='email'>email</label>
@@ -89,13 +86,17 @@ class Login extends Component {
             required
             type='password' 
             id='password'
-            name='name' 
+            name='password' 
             placeholder='password' 
             value={this.state.password}
             onChange={this.handleChange}
           />
           <button type='submit'>log in</button>
+          {this.state.formError && (
+          <p>{this.state.formError}</p>
+        )}
         </form>
+        </>
     );
   }
 }
