@@ -1,130 +1,93 @@
 import React from 'react';
-import firebase, { UN, PWD} from './config';
+import firebase from './config';
 import { 
   Route, 
   Redirect, 
   Link,
-  withRouter
+  withRouter,
+  Switch
  } from 'react-router-dom';
 
-const testAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true
-    setTimeout(cb, 100)
-  },
-  signOut(cb) {
-    this.isAuthenticated = false
-    setTimeout(cb, 100)
-  }
-}
+ // components
 
-const Public = () => <h3>Public</h3>;
-const Private = (props) => {
-  console.log(props.message);
-  return (
-  <h3>Private {props.message}</h3>
-  
-  )};
+ import Public from './Public';
+ import Private from './Private';
+ import Login from './Login';
+ import PageNotFound from './PageNotFound';
 
-class Login extends React.Component {
-  state = {
-    redirectToReferrer: false
-  }
-  login = () => {
-    testAuth.authenticate(() => {
-      this.setState(() => ({
-        redirectToReferrer: true
-      }))
-    })
-
-  }
-  render() {
-
-    const { redirectToReferrer } = this.state;
-    const { from } = this.props.location.state || { from: {pathname: '/'}};
-
-    if(redirectToReferrer === true) {
-      return (
-        <Redirect to={from}/>
-      )
-    }
-
-    return (
-      <div>
-        <p>you must log in to view this page at {from.pathname}</p>
-        <button onClick={this.login}>log in</button>
-        </div>
-    )
-  }
-}
+ import Nav from './Nav';
 
 
-
-
-
-const PrivateRoute = ({ component: Component, ...rest}) => {
-  const currentExtra = rest.extra;
-  const currentMsg = rest.msg;
-  console.log(currentExtra);
-  return (
-    <Route {...rest} render={(props) => (
-     
-      //testAuth.isAuthenticated === true
-      currentExtra === true
-      
-      
-     
-      ? <Component message={currentMsg} {...props}/>
-      :
-      <Redirect to={{
-        pathname: '/login',
-        state: {
-          from: props.location
-        }
-      }}/>
-    )}/>
-  )}
-
-
-const AuthButton = withRouter((props,{ history }) => (
-  //testAuth.isAuthenticated === true
-  props.user === true
-  ?
-  <p>Welcome! <button onClick={() => {
-    testAuth.signOut(() => history.push('/'))
-  }}>Sign Out</button></p>
-  :
-  <p>You are not logged in.</p>
-))
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: false,
-      message: 'test message'
+      user: null,
+      userID: null,
+      userEmail: null,
+      message: 'test message',
+      errorMsg: null
     }
+    this.logOutUser = this.logOutUser.bind(this);
   }
 
+  logOutUser = (evt, history) => {
+    evt.preventDefault();
+    this.setState({
+      user: null,
+      userEmail: null,
+      userId: null,
+      message: null
+    });
+    // firebase
+    //   .auth()
+    //   .signOut()
+    //   .then(() => {
+    //     history.pushState('/')
+    //   });
+    console.log('logged out');
+    history.push('/');
+  };
+
   render() {
-
-
+ 
       return (
-      <div>
-        <AuthButton/>
-        <ul>
-          <li><Link to='/'>Public Page</Link></li>
-          <li><Link to='/private'>Private Page</Link></li>
-        </ul>
-        <hr/>
-        <h1>cnstllndpf </h1>
-
-        <Route exact path='/' component={Public}/>
-        <Route exact path='/login' component={Login}/>
-        <PrivateRoute path='/private' component={Private} msg={this.state.message} extra={this.state.user}/>
+        <>
+        <header>
+          <h1>cnstllndpf</h1>
+          {this.state.user && (
+            <Nav 
+            user={this.state.user}
+            logout={this.logOutUser}
+            />
+          )}
           
-      </div>
+        </header>
+        <main>
+          <hr/>
+
+          
+        </main>
+
+        <Switch>
+          <Route exact path='/' render={() => {
+            return (
+              <Public user={this.state.user}/>
+            )
+          }}/>
+          <Route path='/private' component={Private}/>
+          <Route path='/login' render={(props)=> {
+            return (
+              <Login {...props} extra='Boo!'/>
+            )
+          }}/>
+          <Route component={PageNotFound}/>
+
+        </Switch>
+       
+        </>
+
     );
   }
 }

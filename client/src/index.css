@@ -7,30 +7,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2 {
-  text-align: center;
-}
-
-button.btn-log {
-  display: block;
-  width: 75px;
-  padding: 8px;
+header,
+main,
+footer {
+  max-width: 800px;
   margin-right: auto;
   margin-left: auto;
 }
 
-#btn-login {
-  background-color: white;
-  border-color: green;
-  color: green;
+h1,
+h2,
+h3 {
+  text-align: center;
 }
 
-#btn-logout {
-  background-color: white;
-  border-color: indianred;
+p.text-center {
+  text-align: center;
+}
+
+a.loginLink {
   color: indianred;
 }
-
 
 
 
