@@ -1,161 +1,133 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
-//import firebase from './config';
+import firebase, { UN, PWD} from './config';
+import { 
+  Route, 
+  Redirect, 
+  Link,
+  withRouter
+ } from 'react-router-dom';
 
-const works = [
-  {
-    name: 'All',
-    id: 'work-001',
-    description: 'all of the works',
-    resources: [
-      {
-        name: 'all abstract',
-        id: 'all-abstact'
-      },
-      {
-        name: 'all wildlife',
-        id: 'all-wildlife'
-      }, 
-      {
-        name: 'all portrait',
-        id: 'all-portrait'
-      }          
-    ]
-  },
-  {
-    name: 'Sculpture',
-    id: 'work-002',
-    description: 'sculpture works of art',
-    resources: [
-      {
-        name: 'abstract sculpture',
-        id: 'sculpture-abstact'
-      },
-      {
-        name: 'wildlife sculpture',
-        id: 'sculpture-wildlife'
-      }, 
-      {
-        name: 'portrait sculpture',
-        id: 'sculpture-portrait'
-      }        
-    ]
-  },
-  {
-    name: 'Painting',
-    id: 'work-003',
-    description: 'painting works of art',
-    resources: [
-      {
-        name: 'abstract painting',
-        id: 'painting-abstact'
-      },
-      {
-        name: 'wildlife painting',
-        id: 'painting-wildlife'
-      }, 
-      {
-        name: 'portrait painting',
-        id: 'painting-portrait'
-      }        
-    ]
-  },  
-  {
-    name: 'Drawing',
-    id: 'work-004',
-    description: 'drawing works of art',
-    resources: [
-      {
-        name: 'abstract drawing',
-        id: 'painting-abstact'
-      },
-      {
-        name: 'wildlife drawing',
-        id: 'painting-wildlife'
-      }, 
-      {
-        name: 'portrait drawing',
-        id: 'painting-portrait'
-      }        
-    ]
-  }   
-]
+//  const testLog = () => {
+//    firebase.auth().onAuthStateChanged(function(user))
+//  }
 
-// components
-const Home = () => {
-  return (
-    <div><h1>Home</h1></div>
-  )
+const testAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true
+    setTimeout(cb, 100)
+  },
+  signOut(cb) {
+    this.isAuthenticated = false
+    setTimeout(cb, 100)
+  }
 }
 
-const Work = ({ match }) => {
-  const work = works.find((elem) => {
-    return elem.id === match.params.workId
-  });
-
+const Public = () => <h3>Public</h3>;
+const Private = (props) => {
+  console.log(props.message);
   return (
-    <div>
-      <h3>{work.name}</h3>
-      <p>{work.description}</p>
+  <h3>Private {props.message}</h3>
+  
+  )};
 
-      <ul>
-        {work.resources.map((sub) => (
-         <li key={sub.id}>
-           <Link to={`${match.url}/${sub.id}`}>{sub.name}</Link>
-         </li> 
-        ))}
-      </ul>
+class Login extends React.Component {
+  state = {
+    redirectToReferrer: false
+  }
+  login = () => {
+    testAuth.authenticate(() => {
+      this.setState(() => ({
+        redirectToReferrer: true
+      }))
+    })
+
+  }
+  render() {
+
+    const { redirectToReferrer } = this.state;
+    const { from } = this.props.location.state || { from: {pathname: '/'}};
+
+    if(redirectToReferrer === true) {
+      return (
+        <Redirect to={from}/>
+      )
+    }
+
+    return (
+      <div>
+        <p>you must log in to view this page at {from.pathname}</p>
+        <button onClick={this.login}>log in</button>
+        </div>
+    )
+  }
+}
+
+
+
+
+
+const PrivateRoute = ({ component: Component, ...rest}) => {
+  const currentExtra = rest.extra;
+  const currentMsg = rest.msg;
+  console.log(currentExtra);
+  return (
+    <Route {...rest} render={(props) => (
+     
+      //testAuth.isAuthenticated === true
+      currentExtra === true
       
-    </div>
-  )
-}
-
-const Works = ({ match }) => {
-  return (
-    <div>
-      <h2>Works</h2>
-      <ul>
-        {
-          works.map(({ name, id }) => (
-            <li key={id}>
-              <Link to={`${match.url}/${id}`}>{name}</Link>
-            </li>
-          ))
+      
+     
+      ? <Component message={currentMsg} {...props}/>
+      :
+      <Redirect to={{
+        pathname: '/login',
+        state: {
+          from: props.location
         }
-
-      </ul>
-
-      <hr/>
-
-      <Route path={`${match.path}/:workId`} component={Work}/>
+      }}/>
+    )}/>
+  )}
 
 
-      </div>
-  )
-}
-
-
-
+const AuthButton = withRouter((props,{ history }) => (
+  //testAuth.isAuthenticated === true
+  props.user === true
+  ?
+  <p>Welcome! <button onClick={() => {
+    testAuth.signOut(() => history.push('/'))
+  }}>Sign Out</button></p>
+  :
+  <p>You are not logged in.</p>
+))
 
 class App extends React.Component {
-
+  constructor() {
+    super();
+    this.state = {
+      user: true,
+      message: 'test message'
+    }
+  }
 
   render() {
 
+
       return (
       <div>
+        <AuthButton/>
         <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/works'>Works</Link></li>
+          <li><Link to='/'>Public Page</Link></li>
+          <li><Link to='/private'>Private Page</Link></li>
         </ul>
         <hr/>
         <h1>cnstllndpf </h1>
 
-        <Route exact path='/' component={Home}/>
-        <Route path='/works' component={Works}/>
-    
-
-
+        <Route exact path='/' component={Public}/>
+        <Route exact path='/login' component={Login}/>
+        <PrivateRoute path='/private' component={Private} msg={this.state.message} extra={this.state.user}/>
+          
       </div>
     );
   }
