@@ -20,4 +20,4 @@ const Nav = (props, { history }) => {
   );
 };
 
-export default withRouter(Nav);
+export default withRouter(Nav);;

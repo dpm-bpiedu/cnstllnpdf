@@ -2,13 +2,12 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 const PrivateRoute = ({ component: Component, ...rest}) => {
-  console.log("PrivateRoute, ", rest.user);
+  console.log("private route");
   return (
-    <Route {...rest} render={(props) => (
+    <Route {...rest} render={(props, history) => (
      
-      //testAuth.isAuthenticated === true
       rest.user === true
-     ? <Component {...props}/>
+     ? <Component {...props} user={rest.user} logut={rest.logut}/>
       :
       <Redirect to={{
         pathname: '/login',
