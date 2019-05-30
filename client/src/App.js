@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import firebase from "./config";
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Public from "./Public";
 import PrivateRoute from "./PrivateRoute";
@@ -18,7 +18,8 @@ class App extends Component {
       userID: null,
       userEmail: null,
       message: null,
-      errorMsg: null
+      errorMsg: null,
+      loading: true
     };
     this.logOutUser = this.logOutUser.bind(this);
   }
@@ -42,15 +43,18 @@ class App extends Component {
           user: true,
           userEmail: FBUser.email,
           userID: FBUser.uid,
-          message: "user logged IN"
+          message: "user logged IN",
+          loading: false
         });
         console.log("Auth State Changed: logged IN");
+        return <Redirect to='private'/>
       } else {
         this.setState({
           user: null,
           userEmail: null,
           userID: null,
-          message: "user logged OUT"
+          message: "user logged OUT",
+          loading: false
         });
         console.log("Auth State Changed: logged OUT");
       }
@@ -58,6 +62,11 @@ class App extends Component {
   }
 
   render() {
+    const { loading } = this.state;
+
+    if(loading) {
+      return <p>Loading...</p>
+    }
     return (
       <>
         <header>
