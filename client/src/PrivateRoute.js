@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import firebase from './config';
 
 const PrivateRoute = ({ component: Component, ...rest}) => {
-  //<Component {...props} user={rest.user} logut={rest.logut}/>
-  console.log("private route");
+
   return (
     <Route {...rest} render={(props, history) => (
      

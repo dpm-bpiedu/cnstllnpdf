@@ -3,7 +3,6 @@ import firebase from './config';
 
 
 
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +37,14 @@ class Login extends Component {
         logInfo.password
       )
       .then(() => {
-        this.setState({redirectToReferrer: true});
+
+        // const redirectToPrivate = () => {
+        //   this.props.history.push('/private');
+        // }
+
+        setTimeout(this.props.history.push, 500, '/private');
+        
+        //this.setState({redirectToReferrer: true});
       })
       .catch(error => {
         if(error) {
@@ -49,13 +55,15 @@ class Login extends Component {
       });
   }
 
+  
+
  
   render() {
 
     return (
       <>
         {this.props.user && (
-          <h5>You are logged in</h5>
+          <h5>Loading ...</h5>
         )}
 
         {!this.props.user && (
