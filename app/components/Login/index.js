@@ -23,7 +23,7 @@ class Login extends Component {
         .signInWithEmailAndPassword('daniel.moneypenny@zovio.com', '123456')
         .then(() => {history.push('/getpdf')})
         .catch(error => {
-          if(error.message !==null) {
+          if(error) {
             this.setState({ message: error.message });
           }
           console.log(error.message);
