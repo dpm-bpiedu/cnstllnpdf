@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Landing extends Component {
-  componentDidMount() {
-    this.props.onLoad('landing');
-  }
+  // componentDidMount() {
+  //   this.props.onLoad('landing');
+  // }
   render() {
+    console.log('Landing props, ', this.props);
     return (
   <div className='jumbotron'>
       <h1 className='display-4'>{this.props.title}</h1>
@@ -12,7 +14,7 @@ class Landing extends Component {
       <hr className='my-4'/>
 
       <p className='lead'>
-        <a className='btn btn-secondary btn-lg' href='#' role='button'>log in</a>
+        <Link className='btn btn-secondary btn-lg' to='/login' role='button'>log in</Link>
       </p>        
       </div>
     );

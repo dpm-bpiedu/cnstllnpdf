@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  Switch,
+  Route
+} from 'react-router-dom';
 
 // Views
 import Landing from './components/Landing';
@@ -30,10 +34,15 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Header/>
-        <Main view={this.state.view}>
-        <Landing title='cnstllnpdf' onLoad={this.updateView}/>
+
+        <Main>
+          <Switch>
+              <Route exact path='/' component={Landing}/>
+              <Route path='/login' component={Login}/>
+              <Route path='/getpdf' component={Getpdf}/>
+            </Switch>
         </Main>
-        
+
       </React.Fragment>
     )
   }
