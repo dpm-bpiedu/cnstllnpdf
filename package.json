@@ -18,7 +18,11 @@
       "syntax-dynamic-import"
     ]
   },
-  "keywords": ["epub", "pdf", "html"],
+  "keywords": [
+    "epub",
+    "pdf",
+    "html"
+  ],
   "author": "dan moneypennh",
   "license": "ISC",
   "dependencies": {
