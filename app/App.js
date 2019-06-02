@@ -1,22 +1,39 @@
 import React from 'react';
 
-// Components
+// Views
 import Landing from './components/Landing';
 import Login from './components/Login';
+import Getpdf from './components/Getpdf';
+
+// Components
+import Header from './components/Header';
+import Main from './components/Main';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: true
+      user: true,
+      view: 'home'
     }
+    this.updateView = this.updateView.bind(this);
   }
+
+  updateView(newView) {
+    this.setState({
+      view: newView
+    })
+  }
+
   render() {
+
     return (
       <React.Fragment>
-        <Login
-          title='log in page'
-        />
+        <Header/>
+        <Main view={this.state.view}>
+        <Landing title='cnstllnpdf' onLoad={this.updateView}/>
+        </Main>
+        
       </React.Fragment>
     )
   }
