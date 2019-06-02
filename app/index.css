@@ -1,3 +1,7 @@
-h1 {
+h1, .log-status {
   color: indianred;
+}
+
+.log-status {
+  font-size: 10px;
 }

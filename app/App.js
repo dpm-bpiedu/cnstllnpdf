@@ -1,12 +1,16 @@
 import React from 'react';
 import {
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
+
+// firebase
+import fb from './fb/config';
 
 // Views
 import Landing from './components/Landing';
-import Login from './components/Login';
+import Login from './components/Login/index';
 import Getpdf from './components/Getpdf';
 
 // Components
@@ -17,10 +21,33 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: true,
+      user: null,
+      userEmail: null,
+      userID: null,
+      errorMessage: null,
       view: 'home'
     }
     this.updateView = this.updateView.bind(this);
+  }
+
+  componentDidMount() {
+    fb.auth().onAuthStateChanged((FBuser) => {
+      if(FBuser) {
+        this.setState({
+          user: true,
+          userEmail: FBuser.email,
+          userID: FBuser.uid,
+          errorMessage: null
+        });
+      } else {
+        this.setState({
+          user: false,
+          userEmail: null,
+          userID: null,
+          errorMessage: null
+        });
+      }
+    })
   }
 
   updateView(newView) {
@@ -31,14 +58,15 @@ class App extends React.Component {
 
   render() {
 
+    const user = (this.state.user === true);
+
     return (
       <React.Fragment>
-        <Header/>
+        <Header user={user}/>
 
         <Main>
           <Switch>
-              <Route exact path='/' component={Landing}/>
-              <Route path='/login' component={Login}/>
+              <Route exact path='/' component={Login}/>
               <Route path='/getpdf' component={Getpdf}/>
             </Switch>
         </Main>
