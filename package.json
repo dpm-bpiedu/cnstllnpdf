@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "NODE_ENV='production' webpack",
-    "build-for-windows": "SET NODE_ENV='production' && webpack"
+    "build": "NODE_ENV='production' webpack"
   },
   "babel": {
     "presets": [
@@ -23,10 +22,11 @@
     "pdf",
     "html"
   ],
-  "author": "dan moneypennh",
+  "author": "dan moneypenny",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "firebase": "^6.1.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.4.0",
     "react": "^16.8.4",
