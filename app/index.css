@@ -5,3 +5,8 @@ h1, .log-status {
 .log-status {
   font-size: 10px;
 }
+
+form {
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+}

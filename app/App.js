@@ -11,7 +11,7 @@ import fb from './fb/config';
 // Views
 import Landing from './components/Landing';
 import Login from './components/Login/index';
-import Getpdf from './components/Getpdf';
+import AppHome from './components/AppHome';
 
 // Components
 import Header from './components/Header';
@@ -67,7 +67,7 @@ class App extends React.Component {
         <Main>
           <Switch>
               <Route exact path='/' component={Login}/>
-              <Route path='/getpdf' component={Getpdf}/>
+              <Route path='/app' component={AppHome}/>
             </Switch>
         </Main>
 

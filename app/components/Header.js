@@ -1,4 +1,5 @@
 import React from 'react';
+import Logout from './Logout';
 
 const isUser = (user) => {
   if(user) {
@@ -17,7 +18,12 @@ function Header(props) {
     <nav className="navbar navbar-light bg-light">
       <div className="container">
         <span className="navbar-text">
-          Cnstllnpdf {isUser(props.user)}
+          <h1>Cnstllnpdf
+          {props.user && (
+            <Logout user={props.user}/>
+          )}           
+          </h1> 
+
         </span>
       </div>
     </nav>

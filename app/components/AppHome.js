@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Getpdf extends Component {
+class AppHome extends Component {
   render() {
     return (
       
@@ -68,4 +68,4 @@ class Getpdf extends Component {
   }
 }
 
-export default Getpdf;
+export default AppHome;
