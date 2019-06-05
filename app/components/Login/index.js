@@ -31,7 +31,6 @@ class Login extends Component {
     })
   }
 
-
   onSuccess() {
     let count = 1
     function checkUser() {
@@ -41,9 +40,10 @@ class Login extends Component {
         clearInterval(userTimer);
       } else if(!user && count < 10) {
         count++;
-        console.log(count);
-        console.log(user);
       } else if(count === 10) {
+        this.setState({
+          message: 'Something went wrong'
+        })
         clearInterval(userTimer);
       }
     }
@@ -63,8 +63,7 @@ class Login extends Component {
         .catch(error => {
           if(error) {
             this.setState({ message: error.message });
-          }
-          
+          }       
         });
   }
  
