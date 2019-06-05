@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom';
 // firebase
 import fb from '../../fb/config';
 
-let history;
+let history,user;
+
 
 class Login extends Component {
   constructor(props) {
@@ -14,10 +15,12 @@ class Login extends Component {
     this.state = {
       message: null,
       email: '',
-      password: ''
+      password: '',
+      loading: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
   };
 
   handleChange(event) {
@@ -28,28 +31,54 @@ class Login extends Component {
     })
   }
 
+
+  onSuccess() {
+    let count = 1
+    function checkUser() {
+
+      if(user) {
+        history.push('/app');
+        clearInterval(userTimer);
+      } else if(!user && count < 10) {
+        count++;
+        console.log(count);
+        console.log(user);
+      } else if(count === 10) {
+        clearInterval(userTimer);
+      }
+    }
+
+    let userTimer = setInterval(checkUser, 1000)
+
+  }
+
   handleSubmit(event) {
     event.preventDefault();
       fb.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then(() => {history.push('/app')})
+        .then(this.onSuccess)
+        .then(this.setState({
+          loading: true
+        }))
         .catch(error => {
           if(error) {
             this.setState({ message: error.message });
           }
-          console.log(this.state.message);
+          
         });
   }
  
   render() {
   
     history = this.props.history;
+    user = this.props.user
 
     return (
       <div className='row'>
         <div className='col-6'><LoginHeader/></div>
         <div className='col-6'>
           <form onSubmit={this.handleSubmit}>
+            {this.state.loading && (<div className="loading"><span>loading...</span></div>)}
             <legend>Log In</legend>
             <div className="form-group">
               <label htmlFor="email">Email address</label>

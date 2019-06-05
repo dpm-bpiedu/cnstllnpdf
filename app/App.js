@@ -9,13 +9,15 @@ import {
 import fb from './fb/config';
 
 // Views
-import Landing from './components/Landing';
 import Login from './components/Login/index';
 import AppHome from './components/AppHome';
 
 // Components
 import Header from './components/Header';
 import Main from './components/Main';
+import AppRoute from './components/AppRoute';
+import { UserProvider } from './contexts/user';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -39,9 +41,11 @@ class App extends React.Component {
           userID: FBuser.uid,
           errorMessage: null
         });
+        console.log("logged in");
+        
       } else {
         this.setState({
-          user: false,
+          user: null,
           userEmail: null,
           userID: null,
           errorMessage: null
@@ -57,20 +61,22 @@ class App extends React.Component {
   }
 
   render() {
-
-    const user = (this.state.user === true);
-
+   
     return (
       <React.Fragment>
-        <Header user={user}/>
+        <Header user={this.state.user}/>
 
         <Main>
           <Switch>
-              <Route exact path='/' component={Login}/>
-              <Route path='/app' component={AppHome}/>
+              <Route exact path='/' render={() => (
+                <Redirect to='/login'/>
+              )}/>
+              <Route path='/login' render={() => (
+                <Login user={this.state.user}/>
+              )}/>
+              <AppRoute path='/app' user={this.state.user} component={AppHome}/>
             </Switch>
         </Main>
-
       </React.Fragment>
     )
   }
