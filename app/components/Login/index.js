@@ -36,7 +36,7 @@ class Login extends Component {
     function checkUser() {
 
       if(user) {
-        history.push('/app');
+        history.push('/application');
         clearInterval(userTimer);
       } else if(!user && count < 10) {
         count++;

@@ -16,7 +16,7 @@ import AppHome from './components/AppHome';
 import Header from './components/Header';
 import Main from './components/Main';
 import AppRoute from './components/AppRoute';
-import { UserProvider } from './contexts/user';
+import PageNotFound from './components/PageNotFound';
 
 
 class App extends React.Component {
@@ -74,7 +74,8 @@ class App extends React.Component {
               <Route path='/login' render={() => (
                 <Login user={this.state.user}/>
               )}/>
-              <AppRoute path='/app' user={this.state.user} component={AppHome}/>
+              <AppRoute path='/application' user={this.state.user} component={AppHome}/>
+              <Route component={PageNotFound}/>
             </Switch>
         </Main>
       </React.Fragment>
