@@ -7,6 +7,7 @@ const FormLogin = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const handleLogin = useCallback(
     async event => {
       event.preventDefault();
@@ -16,7 +17,8 @@ const FormLogin = ({ history }) => {
           .signInWithEmailAndPassword(email, password);
         history.push("/");
       } catch (error) {
-        console(error.message);
+        console.warn(error.message);
+        setMessage(error.message);
       }
     }, [history, email, password]
   );  
@@ -28,7 +30,7 @@ const FormLogin = ({ history }) => {
     <form id="form-login" onSubmit={handleLogin}>      
       
           <legend>
-          <legend>cnstllnpdf | log in</legend>
+          <legend>cnstllnpdf | log in<br/>{message}</legend>
           </legend>
           <label>
             email
