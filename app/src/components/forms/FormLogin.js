@@ -39,7 +39,7 @@ const FormLogin = ({ history }) => {
               placeholder="enter email"
               value={email}
               onChange={(e) => {setEmail(e.target.value)}}
-            />
+            /><br/>
           </label>
           <label>
             password
@@ -51,7 +51,7 @@ const FormLogin = ({ history }) => {
               value={password}
               onChange={(e) => {setPassword(e.target.value)}}
             />
-          </label>
+          </label><br/>
           
           <button type="submit">
             log in
