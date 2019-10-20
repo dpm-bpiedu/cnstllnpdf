@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cd app && yarn start",
     "build": "cd app && yarn build",
+    "deploy-app": "firebase deploy --only hosting",
     "watch-sass": "node-sass app/scss/style.scss app/src/index.css --watch",
     "compile-sass": "node-sass app/scss/style.scss app/scss/style.comp.css",
     "prefix-css": "postcss --use autoprefixer -b 'last 5 versions' app/scss/style.comp.css -o app/scss/style.prefix.css",

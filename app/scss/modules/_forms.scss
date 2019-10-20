@@ -1,0 +1,36 @@
+/*---------------------------------*/
+/*- FORM LOGIN */
+/*---------------------------------*/
+
+#form-login {
+  background-color: $color-gray-2;
+  max-width: 400px;
+  padding: 15px;
+  border-radius: 6px;
+  margin: 50px auto auto auto;
+  legend {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.25em;
+  }
+  input {
+    width: 100%;
+    background-color: $color-gray-3;
+    border-color: $color-gray-3;
+    color: #fff;
+    &::placeholder {
+      color: $color-gray-4;
+    }
+    &:focus {
+      background-color: #fff;
+      color: $color-gray-2;
+    }
+  }
+  label {
+    color: #fff;
+  }
+  button {
+    color: #fff;
+  }
+}
