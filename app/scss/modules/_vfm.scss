@@ -1,0 +1,43 @@
+//$color-primary: #33C3F0;//default
+//$color-primary: #7d8484;//gunsmoke
+//$color-primary: #6495ed;//corflower blue
+//$color-primary: #a93333;// rust
+//$color-primary: #a93f33;
+//$color-primary: #878984;
+//$color-primary: DimGray;
+$color-primary: #4682b4;//steel blue
+$color-primary-dark: mix(black, $color-primary, 20%);
+$color-primary-light: mix(white, $color-primary, 20%);
+$color-primary-neg: white;
+$color-warning: #a93333;
+$color-txt: #222;
+
+$color-link: #1eaedb;
+$color-link-hover: #0fa0ce;
+
+$font-default: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+$font-body: $font-system;
+$font-heading: $font-system;
+
+$header-width: 175px; 
+
+// MIXINS
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
